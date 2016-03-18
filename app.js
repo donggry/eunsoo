@@ -292,9 +292,9 @@ io.sockets.on('connection',function(socket){
 	}).then(function(resp){
 		var hits = resp.hits.hits;
 		var hits_str = JSON.stringify(hits);
-	//	hits_str = "{\"result\":" + hits_str + "}"
-		var hits_adv=hits_str.adv
-		io.sockets.emit("chatu",hits_adv);
+		hits_str = "{\"result\":" + hits_str + "}"
+	//	var hits_adv=hits_str.adv
+		io.sockets.emit("chatu",hits_str);
 		console.log(user_email.email);
 	}, function(err){
 		console.trace(err.message);
