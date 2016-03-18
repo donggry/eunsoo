@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>chatting</title>
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        $(document).ready(function(){
+        var socket=io.connect();
+        socket.on('chatm',function(data){
+   	       	var output='';
+        	output +='<li>';
+        	output +='  <h3>'+data.messages+'</h3>';
+       		output +='  <p>'+data.date+'</p>';
+        	output +='</li>';
+        	$(output).prependTo('#content');
+        });
+	socket.on('chatu',function(data){
+   	       	var output='';
+        	output +='<li>';
+        	output +='  <h3>'+ data +'</h3>';
+        	output +='</li>';
+        	$(output).prependTo('#content');
+        });
+        $("#send").click(function(){
+        socket.emit('chatm',{
+            messages:$('#messages').val(),
+        date:new Date().toUTCString()
+                        });
+            });
+	$("#usersend").click(function(){
+	socket.emit('chatu',{
+	    usermessages:$('#usermessages').val(),
+	date:new Date().toUTCString()
+			});
+	});
+    });
+          </script>
+          </head>
+          <body>
+              <h1>chat</h1>
+              <p>Chat with ES</p>
+              <hr/>
+          message  <input id="messages" />
+              <button id="send">send</button>
+	user_message <input id="usermessages"/>
+	      <button id="usersend">send</button>
+      <hr/>
+      <ul id="content">
+      </ul>
+  </body>
+  </html>
